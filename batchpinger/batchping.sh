@@ -26,14 +26,16 @@ if [ -t 1 ] || [ "$FORCE_COLOR" -eq 1 ]; then
     C_BLUE="\033[1;34m"
     C_PURPLE="\033[1;35m"
     C_CYAN="\033[1;36m"
-    C_RESET="$(tput sgr0)"
+    C_RESET="$(/usr/bin/tput sgr0)"
 fi
 
 C_OK="$C_GREEN"
 C_NOK="$C_RED"
 
+CURRENT_IP="$(/usr/bin/ip route get 8.8.8.8 | /usr/bin/sed -n 's/.*src \([^\ ]*\).*/\1/p')"
+
 echo "Let's test the hosts defined in $PATH"
-echo "=================== Results ===================="
+echo "========== Results from $CURRENT_IP =========="
 
 IFS="="
 while read -r name value
